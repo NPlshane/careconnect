@@ -1,9 +1,14 @@
 
-import { Heart, MessageCircle, Calendar, Brain, Sun, Moon, Menu } from 'lucide-react';
+import { Heart, MessageCircle, Calendar, Brain, Sun, Moon, Menu, Plus, Minus, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import Navigation from '../components/Navigation';
+import ChatBot from '../components/ChatBot';
 
 const Index = () => {
+  const [textZoom, setTextZoom] = useState(3); // Default zoom level
+  const [showChatBot, setShowChatBot] = useState(false);
+  
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good Morning' : currentHour < 18 ? 'Good Afternoon' : 'Good Evening';
   const greetingIcon = currentHour < 18 ? Sun : Moon;
@@ -40,65 +45,97 @@ const Index = () => {
     },
   ];
 
+  const adjustTextSize = (increment: boolean) => {
+    setTextZoom(prev => {
+      const newZoom = increment ? Math.min(prev + 1, 5) : Math.max(prev - 1, 1);
+      document.documentElement.style.fontSize = `${14 + (newZoom * 2)}px`;
+      return newZoom;
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className={`min-h-screen bg-background pb-24 text-zoom-${textZoom}`}>
+      {/* Magnification Controls */}
+      <div className="magnify-controls">
+        <div className="flex items-center space-x-3">
+          <span className="elderly-text font-semibold">Text Size</span>
+          <button
+            onClick={() => adjustTextSize(false)}
+            className="elderly-button bg-secondary hover:bg-secondary/80 !p-3 !min-h-12 !min-w-12"
+            disabled={textZoom === 1}
+          >
+            <Minus size={20} />
+          </button>
+          <span className="elderly-text font-bold bg-primary/20 px-3 py-1 rounded-lg">
+            {textZoom}
+          </span>
+          <button
+            onClick={() => adjustTextSize(true)}
+            className="elderly-button bg-secondary hover:bg-secondary/80 !p-3 !min-h-12 !min-w-12"
+            disabled={textZoom === 5}
+          >
+            <Plus size={20} />
+          </button>
+        </div>
+      </div>
+
       {/* Mobile Header */}
-      <header className="bg-card shadow-sm px-4 py-3 sticky top-0 z-40">
+      <header className="bg-card shadow-lg px-6 py-6 sticky top-0 z-40 border-b-4 border-primary/20">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <button className="p-2 hover:bg-primary/20 rounded-lg">
-              <Menu size={24} className="text-primary" />
+          <div className="flex items-center space-x-4">
+            <button className="elderly-button bg-primary/20 hover:bg-primary/30 !p-4">
+              <Menu size={28} className="text-primary" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-primary">CareConnect</h1>
-              <p className="text-sm text-muted-foreground">{greeting}</p>
+              <h1 className="text-4xl font-bold text-primary mb-1">CareConnect</h1>
+              <p className="elderly-text text-muted-foreground">{greeting}</p>
             </div>
           </div>
-          <GreetingIcon className="text-primary" size={28} />
+          <GreetingIcon className="text-primary" size={40} />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-4 space-y-6">
+      <main className="px-6 py-6 space-y-8">
         {/* Quick Stats Card */}
-        <div className="bg-card rounded-xl p-4 shadow-sm">
-          <h2 className="text-lg font-semibold mb-3">Today's Overview</h2>
-          <div className="grid grid-cols-3 gap-3">
-            <div className="text-center p-3 bg-primary/10 rounded-lg">
-              <Heart className="mx-auto mb-1 text-primary" size={24} />
-              <p className="text-lg font-bold">Good</p>
-              <p className="text-xs text-muted-foreground">Mood</p>
+        <div className="elderly-card bg-card">
+          <h2 className="elderly-heading">Today's Overview</h2>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center p-6 bg-primary/10 rounded-2xl border-2 border-primary/20">
+              <Heart className="mx-auto mb-3 text-primary" size={36} />
+              <p className="text-2xl font-bold mb-1">Good</p>
+              <p className="elderly-text text-muted-foreground">Mood</p>
             </div>
-            <div className="text-center p-3 bg-secondary/10 rounded-lg">
-              <MessageCircle className="mx-auto mb-1 text-secondary" size={24} />
-              <p className="text-lg font-bold">3</p>
-              <p className="text-xs text-muted-foreground">Messages</p>
+            <div className="text-center p-6 bg-secondary/10 rounded-2xl border-2 border-secondary/20">
+              <MessageCircle className="mx-auto mb-3 text-secondary" size={36} />
+              <p className="text-2xl font-bold mb-1">3</p>
+              <p className="elderly-text text-muted-foreground">Messages</p>
             </div>
-            <div className="text-center p-3 bg-accent/10 rounded-lg">
-              <Calendar className="mx-auto mb-1 text-accent" size={24} />
-              <p className="text-lg font-bold">2</p>
-              <p className="text-xs text-muted-foreground">Events</p>
+            <div className="text-center p-6 bg-accent/10 rounded-2xl border-2 border-accent/20">
+              <Calendar className="mx-auto mb-3 text-accent" size={36} />
+              <p className="text-2xl font-bold mb-1">2</p>
+              <p className="elderly-text text-muted-foreground">Events</p>
             </div>
           </div>
         </div>
 
-        {/* Feature Grid - Mobile Optimized */}
-        <div className="space-y-3">
-          <h2 className="text-lg font-semibold px-1">Main Features</h2>
-          <div className="grid grid-cols-2 gap-3">
+        {/* Feature Grid */}
+        <div className="space-y-6">
+          <h2 className="elderly-heading px-2">Main Features</h2>
+          <div className="grid grid-cols-1 gap-6">
             {features.map(({ title, description, icon: Icon, path, color }) => (
               <Link
                 key={title}
                 to={path}
-                className={`${color} p-4 rounded-xl shadow-sm active:scale-95 transition-all duration-200 block`}
+                className={`${color} elderly-card active:scale-95 transition-all duration-200 block hover:shadow-2xl`}
               >
-                <div className="flex flex-col items-center text-center space-y-2">
-                  <div className="p-2 bg-white/30 rounded-lg">
-                    <Icon size={28} className="text-foreground" />
+                <div className="flex items-center space-x-6">
+                  <div className="p-4 bg-white/30 rounded-2xl">
+                    <Icon size={40} className="text-foreground" />
                   </div>
-                  <div>
-                    <h3 className="text-sm font-bold leading-tight">{title}</h3>
-                    <p className="text-xs opacity-90 mt-1">{description}</p>
+                  <div className="flex-1">
+                    <h3 className="elderly-subheading mb-2">{title}</h3>
+                    <p className="elderly-text opacity-90">{description}</p>
                   </div>
                 </div>
               </Link>
@@ -106,19 +143,33 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Emergency Contact - Mobile Optimized */}
-        <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4">
+        {/* Emergency Contact */}
+        <div className="elderly-card bg-destructive/10 border-4 border-destructive/30">
           <div className="text-center">
-            <h3 className="text-lg font-bold text-destructive mb-2">Emergency</h3>
-            <p className="text-sm text-muted-foreground mb-4">
+            <h3 className="elderly-heading text-destructive mb-4">Emergency</h3>
+            <p className="elderly-text text-muted-foreground mb-6">
               Need immediate help? Tap to call emergency services.
             </p>
-            <button className="w-full bg-destructive text-destructive-foreground py-3 px-6 rounded-lg font-semibold text-lg active:scale-95 transition-transform">
+            <button className="elderly-button w-full bg-destructive text-destructive-foreground hover:bg-destructive/90 text-2xl">
               Call 911
             </button>
           </div>
         </div>
       </main>
+
+      {/* AI Chatbot Floating Button */}
+      <button
+        onClick={() => setShowChatBot(true)}
+        className="fixed bottom-24 right-6 elderly-button bg-primary hover:bg-primary/80 rounded-full !p-6 shadow-2xl z-40"
+        aria-label="Open AI Assistant"
+      >
+        <MessageSquare size={32} />
+      </button>
+
+      {/* AI Chatbot */}
+      {showChatBot && (
+        <ChatBot onClose={() => setShowChatBot(false)} />
+      )}
 
       <Navigation />
     </div>

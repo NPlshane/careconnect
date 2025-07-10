@@ -84,12 +84,12 @@
 
   body {
     @apply bg-background text-foreground;
-    font-size: 16px; /* Mobile-optimized base font size */
-    line-height: 1.5;
+    font-size: 18px; /* Increased base font size for elderly */
+    line-height: 1.6;
   }
 }
 
-/* Mobile-optimized components for elderly users */
+/* Elderly-optimized components */
 @layer utilities {
   .safe-area-pb {
     padding-bottom: env(safe-area-inset-bottom);
@@ -98,31 +98,50 @@
   .safe-area-pt {
     padding-top: env(safe-area-inset-top);
   }
+
+  /* Text size magnification levels */
+  .text-zoom-1 { font-size: 1rem; }
+  .text-zoom-2 { font-size: 1.125rem; }
+  .text-zoom-3 { font-size: 1.25rem; }
+  .text-zoom-4 { font-size: 1.375rem; }
+  .text-zoom-5 { font-size: 1.5rem; }
 }
 
 @layer components {
-  /* Mobile-first button styling */
-  .mobile-button {
-    @apply px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
-    min-height: 48px; /* Android minimum touch target */
-    min-width: 48px;
+  /* Elderly-friendly button styling */
+  .elderly-button {
+    @apply px-6 py-4 text-xl font-bold rounded-xl transition-all duration-200 active:scale-95 focus:outline-none focus:ring-4 focus:ring-ring focus:ring-offset-4;
+    min-height: 64px; /* Larger touch target for elderly */
+    min-width: 64px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   
-  /* Mobile card styling */
-  .mobile-card {
-    @apply p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 bg-card;
+  /* Elderly card styling */
+  .elderly-card {
+    @apply p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 bg-card border-2 border-border/50;
   }
   
-  /* Mobile text sizing for readability */
-  .mobile-text {
-    @apply text-base leading-relaxed;
+  /* Elderly text sizing for maximum readability */
+  .elderly-text {
+    @apply text-lg leading-relaxed;
+    font-weight: 500; /* Slightly bolder for better visibility */
   }
   
-  .mobile-heading {
-    @apply text-xl font-bold mb-3;
+  .elderly-heading {
+    @apply text-3xl font-bold mb-4 leading-tight;
   }
   
-  .mobile-subheading {
-    @apply text-lg font-semibold mb-2;
+  .elderly-subheading {
+    @apply text-2xl font-semibold mb-3 leading-snug;
+  }
+
+  /* High contrast focus indicators */
+  .elderly-focus {
+    @apply focus:ring-4 focus:ring-primary focus:ring-offset-4 focus:outline-none;
+  }
+
+  /* Magnification controls */
+  .magnify-controls {
+    @apply fixed top-4 right-4 z-50 bg-card/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl border-2 border-border;
   }
 }
