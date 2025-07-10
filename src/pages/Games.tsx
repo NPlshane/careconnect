@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ArrowLeft, Brain, Star, Play, Trophy, Timer, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -19,6 +18,7 @@ const Games = () => {
       played: true,
       bestScore: 85,
       icon: '🃏',
+      path: '/games/memory-cards',
     },
     {
       id: 2,
@@ -103,7 +103,7 @@ const Games = () => {
     : games.filter(game => game.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-screen bg-background pb-32">
       {/* Header */}
       <header className="bg-card shadow-sm p-6 mb-8">
         <div className="max-w-4xl mx-auto">
@@ -207,10 +207,20 @@ const Games = () => {
               </div>
 
               <div className="flex space-x-3">
-                <button className="elderly-button bg-primary hover:bg-primary/80 flex-1 flex items-center justify-center space-x-2">
-                  <Play size={20} />
-                  <span>{game.played ? 'Play Again' : 'Start Game'}</span>
-                </button>
+                {game.path ? (
+                  <Link
+                    to={game.path}
+                    className="elderly-button bg-primary hover:bg-primary/80 flex-1 flex items-center justify-center space-x-2 text-center"
+                  >
+                    <Play size={20} />
+                    <span>{game.played ? 'Play Again' : 'Start Game'}</span>
+                  </Link>
+                ) : (
+                  <button className="elderly-button bg-primary hover:bg-primary/80 flex-1 flex items-center justify-center space-x-2">
+                    <Play size={20} />
+                    <span>{game.played ? 'Play Again' : 'Start Game'}</span>
+                  </button>
+                )}
                 <button className="elderly-button bg-secondary hover:bg-secondary/80 px-4">
                   ℹ️
                 </button>

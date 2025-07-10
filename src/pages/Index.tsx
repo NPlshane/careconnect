@@ -1,13 +1,11 @@
 
-import { Heart, MessageCircle, Calendar, Brain, Sun, Moon, Menu, Plus, Minus, MessageSquare } from 'lucide-react';
+import { Heart, MessageCircle, Calendar, Brain, Sun, Moon, Menu, Plus, Minus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Navigation from '../components/Navigation';
-import ChatBot from '../components/ChatBot';
 
 const Index = () => {
   const [textZoom, setTextZoom] = useState(3); // Default zoom level
-  const [showChatBot, setShowChatBot] = useState(false);
   
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Good Morning' : currentHour < 18 ? 'Good Afternoon' : 'Good Evening';
@@ -54,7 +52,7 @@ const Index = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-background pb-24 text-zoom-${textZoom}`}>
+    <div className={`min-h-screen bg-background pb-32 text-zoom-${textZoom}`}>
       {/* Magnification Controls */}
       <div className="magnify-controls">
         <div className="flex items-center space-x-3">
@@ -156,20 +154,6 @@ const Index = () => {
           </div>
         </div>
       </main>
-
-      {/* AI Chatbot Floating Button */}
-      <button
-        onClick={() => setShowChatBot(true)}
-        className="fixed bottom-24 right-6 elderly-button bg-primary hover:bg-primary/80 rounded-full !p-6 shadow-2xl z-40"
-        aria-label="Open AI Assistant"
-      >
-        <MessageSquare size={32} />
-      </button>
-
-      {/* AI Chatbot */}
-      {showChatBot && (
-        <ChatBot onClose={() => setShowChatBot(false)} />
-      )}
 
       <Navigation />
     </div>

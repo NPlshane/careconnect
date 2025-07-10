@@ -84,19 +84,40 @@
 
   body {
     @apply bg-background text-foreground;
-    font-size: 18px; /* Increased base font size for elderly */
+    font-size: 20px; /* Increased base font size for elderly on mobile */
     line-height: 1.6;
+    /* Optimize for Android devices */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Prevent zoom on input focus on mobile */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Android-specific optimizations */
+  @media screen and (max-width: 768px) {
+    body {
+      font-size: 18px;
+    }
+  }
+
+  /* Prevent text selection on game elements */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }
 
 /* Elderly-optimized components */
 @layer utilities {
   .safe-area-pb {
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
   }
   
   .safe-area-pt {
-    padding-top: env(safe-area-inset-top);
+    padding-top: max(env(safe-area-inset-top), 1rem);
   }
 
   /* Text size magnification levels */
@@ -105,43 +126,154 @@
   .text-zoom-3 { font-size: 1.25rem; }
   .text-zoom-4 { font-size: 1.375rem; }
   .text-zoom-5 { font-size: 1.5rem; }
+
+  /* Android-specific touch improvements */
+  @media screen and (max-width: 768px) {
+    .touch-optimized {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+      touch-action: manipulation;
+    }
+  }
 }
 
 @layer components {
-  /* Elderly-friendly button styling */
+  /* Elderly-friendly button styling with Android optimizations */
   .elderly-button {
-    @apply px-6 py-4 text-xl font-bold rounded-xl transition-all duration-200 active:scale-95 focus:outline-none focus:ring-4 focus:ring-ring focus:ring-offset-4;
+    @apply px-6 py-4 text-xl font-bold rounded-xl transition-all duration-200 active:scale-95 focus:outline-none focus:ring-4 focus:ring-ring focus:ring-offset-2 touch-optimized;
     min-height: 64px; /* Larger touch target for elderly */
     min-width: 64px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* Android-specific improvements */
+    -webkit-appearance: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Enhanced button for mobile devices */
+  @media screen and (max-width: 768px) {
+    .elderly-button {
+      min-height: 56px;
+      min-width: 56px;
+      font-size: 1.125rem;
+      padding: 1rem 1.5rem;
+    }
   }
   
-  /* Elderly card styling */
+  /* Elderly card styling with mobile optimizations */
   .elderly-card {
     @apply p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 bg-card border-2 border-border/50;
+    /* Mobile optimizations */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  @media screen and (max-width: 768px) {
+    .elderly-card {
+      @apply p-4 rounded-xl;
+      margin-bottom: 1rem;
+    }
   }
   
-  /* Elderly text sizing for maximum readability */
+  /* Elderly text sizing for maximum readability on mobile */
   .elderly-text {
     @apply text-lg leading-relaxed;
     font-weight: 500; /* Slightly bolder for better visibility */
   }
+
+  @media screen and (max-width: 768px) {
+    .elderly-text {
+      @apply text-base leading-relaxed;
+      font-weight: 600;
+    }
+  }
   
   .elderly-heading {
     @apply text-3xl font-bold mb-4 leading-tight;
+  }
+
+  @media screen and (max-width: 768px) {
+    .elderly-heading {
+      @apply text-2xl font-bold mb-3 leading-tight;
+    }
   }
   
   .elderly-subheading {
     @apply text-2xl font-semibold mb-3 leading-snug;
   }
 
-  /* High contrast focus indicators */
+  @media screen and (max-width: 768px) {
+    .elderly-subheading {
+      @apply text-xl font-semibold mb-2 leading-snug;
+    }
+  }
+
+  /* High contrast focus indicators for Android */
   .elderly-focus {
     @apply focus:ring-4 focus:ring-primary focus:ring-offset-4 focus:outline-none;
   }
 
-  /* Magnification controls */
+  /* Magnification controls with better mobile positioning */
   .magnify-controls {
     @apply fixed top-4 right-4 z-50 bg-card/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl border-2 border-border;
   }
+
+  @media screen and (max-width: 768px) {
+    .magnify-controls {
+      @apply top-2 right-2 p-3 rounded-xl;
+      transform: scale(0.9);
+    }
+  }
+
+  /* Game-specific styles */
+  .game-card {
+    @apply elderly-button aspect-square text-4xl transition-all duration-300 no-select;
+    /* Prevent double-tap zoom on game cards */
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .game-card {
+      @apply text-3xl;
+      min-height: 80px;
+      min-width: 80px;
+    }
+  }
+
+  /* Navigation optimizations for Android */
+  .nav-item {
+    @apply touch-optimized;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Input optimizations for Android */
+  input, textarea {
+    @apply touch-optimized;
+    font-size: 16px; /* Prevent zoom on iOS Safari */
+    -webkit-appearance: none;
+  }
+
+  /* Smooth scrolling for Android */
+  .smooth-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Android Chrome address bar handling */
+@media screen and (max-width: 768px) {
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Use dynamic viewport height when available */
+  }
+}
+
+/* Performance optimizations for Android */
+.gpu-accelerated {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
 }

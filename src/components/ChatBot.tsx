@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { X, Send, Bot, User, Mic, MicOff } from 'lucide-react';
 
@@ -125,10 +124,10 @@ const ChatBot = ({ onClose }: ChatBotProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center p-4">
-      <div className="bg-card rounded-t-3xl w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl border-4 border-primary/20">
+    <div className="fixed inset-0 bg-black/50 z-[70] flex items-end justify-center p-4">
+      <div className="bg-card rounded-t-3xl w-full max-w-4xl h-[85vh] max-h-[85vh] flex flex-col shadow-2xl border-4 border-primary/20 mb-20">
         {/* Header */}
-        <div className="bg-primary p-6 rounded-t-3xl flex items-center justify-between">
+        <div className="bg-primary p-6 rounded-t-3xl flex items-center justify-between flex-shrink-0">
           <div className="flex items-center space-x-4">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
               <Bot size={28} className="text-primary-foreground" />
@@ -147,14 +146,14 @@ const ChatBot = ({ onClose }: ChatBotProps) => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-0">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div className={`flex items-start space-x-3 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${message.sender === 'user' ? 'bg-secondary' : 'bg-primary'}`}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${message.sender === 'user' ? 'bg-secondary' : 'bg-primary'}`}>
                   {message.sender === 'user' ? (
                     <User size={20} className="text-secondary-foreground" />
                   ) : (
@@ -180,7 +179,7 @@ const ChatBot = ({ onClose }: ChatBotProps) => {
           {isLoading && (
             <div className="flex justify-start">
               <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
                   <Bot size={20} className="text-primary-foreground" />
                 </div>
                 <div className="bg-muted p-4 rounded-2xl">
@@ -197,11 +196,11 @@ const ChatBot = ({ onClose }: ChatBotProps) => {
         </div>
 
         {/* Input */}
-        <div className="p-6 border-t-2 border-border">
+        <div className="p-6 border-t-2 border-border flex-shrink-0">
           <div className="flex items-center space-x-4">
             <button
               onClick={startVoiceRecognition}
-              className={`elderly-button !p-4 !min-h-14 !min-w-14 ${
+              className={`elderly-button !p-4 !min-h-14 !min-w-14 flex-shrink-0 ${
                 isListening 
                   ? 'bg-destructive hover:bg-destructive/80 text-destructive-foreground' 
                   : 'bg-accent hover:bg-accent/80'
@@ -217,12 +216,12 @@ const ChatBot = ({ onClose }: ChatBotProps) => {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type your message or use voice..."
-              className="flex-1 elderly-text p-4 bg-background border-2 border-border rounded-2xl focus:outline-none focus:ring-4 focus:ring-ring"
+              className="flex-1 elderly-text p-4 bg-background border-2 border-border rounded-2xl focus:outline-none focus:ring-4 focus:ring-ring min-w-0"
               disabled={isLoading}
             />
             <button
               onClick={handleSendMessage}
-              className="elderly-button bg-primary hover:bg-primary/80 !p-4 !min-h-14 !min-w-14"
+              className="elderly-button bg-primary hover:bg-primary/80 !p-4 !min-h-14 !min-w-14 flex-shrink-0"
               disabled={isLoading || !inputMessage.trim()}
             >
               <Send size={24} />
