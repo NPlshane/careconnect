@@ -4,28 +4,30 @@ import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
   const navItems = [
-    { path: '/', icon: Home, label: 'Home', color: 'bg-primary' },
-    { path: '/checkup', icon: Heart, label: 'Daily Checkup', color: 'bg-secondary' },
-    { path: '/chat', icon: MessageCircle, label: 'Chat & Calls', color: 'bg-accent' },
-    { path: '/events', icon: Calendar, label: 'Community', color: 'bg-primary' },
-    { path: '/games', icon: Brain, label: 'Brain Games', color: 'bg-secondary' },
+    { path: '/', icon: Home, label: 'Home' },
+    { path: '/checkup', icon: Heart, label: 'Checkup' },
+    { path: '/chat', icon: MessageCircle, label: 'Chat' },
+    { path: '/events', icon: Calendar, label: 'Events' },
+    { path: '/games', icon: Brain, label: 'Games' },
   ];
 
   return (
-    <nav className="bg-card border-t-4 border-primary p-4 fixed bottom-0 left-0 right-0 z-50">
-      <div className="flex justify-around items-center max-w-6xl mx-auto">
-        {navItems.map(({ path, icon: Icon, label, color }) => (
+    <nav className="bg-card border-t border-border fixed bottom-0 left-0 right-0 z-50 safe-area-pb">
+      <div className="flex justify-around items-center px-2 py-2">
+        {navItems.map(({ path, icon: Icon, label }) => (
           <NavLink
             key={path}
             to={path}
             className={({ isActive }) =>
-              `elderly-button flex flex-col items-center space-y-2 ${color} ${
-                isActive ? 'ring-4 ring-ring' : ''
-              } hover:bg-opacity-80`
+              `flex flex-col items-center justify-center px-3 py-2 rounded-lg transition-colors min-w-0 flex-1 ${
+                isActive 
+                  ? 'bg-primary/20 text-primary' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+              }`
             }
           >
-            <Icon size={32} />
-            <span className="text-sm font-medium text-center">{label}</span>
+            <Icon size={20} className="mb-1" />
+            <span className="text-xs font-medium truncate">{label}</span>
           </NavLink>
         ))}
       </div>

@@ -84,27 +84,45 @@
 
   body {
     @apply bg-background text-foreground;
-    font-size: 18px; /* Larger base font size for elderly users */
+    font-size: 16px; /* Mobile-optimized base font size */
+    line-height: 1.5;
   }
 }
 
-/* Accessibility enhancements for elderly users */
+/* Mobile-optimized components for elderly users */
+@layer utilities {
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-area-pt {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
 @layer components {
-  .elderly-button {
-    @apply px-8 py-6 text-xl font-semibold rounded-xl transition-all duration-200 hover:scale-105 focus:scale-105 focus:outline-none focus:ring-4 focus:ring-ring;
-    min-height: 4rem;
-    min-width: 8rem;
+  /* Mobile-first button styling */
+  .mobile-button {
+    @apply px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    min-height: 48px; /* Android minimum touch target */
+    min-width: 48px;
   }
   
-  .elderly-card {
-    @apply p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
+  /* Mobile card styling */
+  .mobile-card {
+    @apply p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 bg-card;
   }
   
-  .elderly-text {
-    @apply text-lg leading-relaxed;
+  /* Mobile text sizing for readability */
+  .mobile-text {
+    @apply text-base leading-relaxed;
   }
   
-  .elderly-heading {
-    @apply text-3xl font-bold mb-6;
+  .mobile-heading {
+    @apply text-xl font-bold mb-3;
+  }
+  
+  .mobile-subheading {
+    @apply text-lg font-semibold mb-2;
   }
 }

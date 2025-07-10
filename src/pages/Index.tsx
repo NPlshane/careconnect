@@ -1,5 +1,5 @@
 
-import { Heart, MessageCircle, Calendar, Brain, Sun, Moon } from 'lucide-react';
+import { Heart, MessageCircle, Calendar, Brain, Sun, Moon, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 
@@ -12,28 +12,28 @@ const Index = () => {
   const features = [
     {
       title: 'Daily Checkup',
-      description: 'Track your mood and complete wellness surveys',
+      description: 'Track your mood and wellness',
       icon: Heart,
       path: '/checkup',
       color: 'bg-primary hover:bg-primary/80',
     },
     {
-      title: 'Chat & Video Calls',
-      description: 'Connect with family, friends, and healthcare providers',
+      title: 'Chat & Calls',
+      description: 'Connect with family and doctors',
       icon: MessageCircle,
       path: '/chat',
       color: 'bg-secondary hover:bg-secondary/80',
     },
     {
-      title: 'Community Events',
-      description: 'Discover local activities and social gatherings',
+      title: 'Community',
+      description: 'Local events and activities',
       icon: Calendar,
       path: '/events',
       color: 'bg-accent hover:bg-accent/80',
     },
     {
-      title: 'Brain Training',
-      description: 'Keep your mind sharp with fun cognitive games',
+      title: 'Brain Games',
+      description: 'Keep your mind sharp',
       icon: Brain,
       path: '/games',
       color: 'bg-primary hover:bg-primary/80',
@@ -41,76 +41,80 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <header className="bg-card shadow-sm p-6 mb-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-4xl font-bold text-primary">CareConnect</h1>
-            <GreetingIcon className="text-primary" size={40} />
+    <div className="min-h-screen bg-background pb-20">
+      {/* Mobile Header */}
+      <header className="bg-card shadow-sm px-4 py-3 sticky top-0 z-40">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <button className="p-2 hover:bg-primary/20 rounded-lg">
+              <Menu size={24} className="text-primary" />
+            </button>
+            <div>
+              <h1 className="text-2xl font-bold text-primary">CareConnect</h1>
+              <p className="text-sm text-muted-foreground">{greeting}</p>
+            </div>
           </div>
-          <p className="elderly-text text-muted-foreground">
-            {greeting}! Welcome to your health and wellness companion.
-          </p>
+          <GreetingIcon className="text-primary" size={28} />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6">
-        {/* Quick Stats */}
-        <div className="elderly-card bg-card mb-8">
-          <h2 className="elderly-heading">Today at a Glance</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-4 bg-primary/20 rounded-xl">
-              <Heart className="mx-auto mb-2 text-primary" size={32} />
-              <p className="text-2xl font-bold">Good</p>
-              <p className="elderly-text text-muted-foreground">Today's Mood</p>
+      <main className="px-4 py-4 space-y-6">
+        {/* Quick Stats Card */}
+        <div className="bg-card rounded-xl p-4 shadow-sm">
+          <h2 className="text-lg font-semibold mb-3">Today's Overview</h2>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center p-3 bg-primary/10 rounded-lg">
+              <Heart className="mx-auto mb-1 text-primary" size={24} />
+              <p className="text-lg font-bold">Good</p>
+              <p className="text-xs text-muted-foreground">Mood</p>
             </div>
-            <div className="text-center p-4 bg-secondary/20 rounded-xl">
-              <MessageCircle className="mx-auto mb-2 text-secondary" size={32} />
-              <p className="text-2xl font-bold">3</p>
-              <p className="elderly-text text-muted-foreground">New Messages</p>
+            <div className="text-center p-3 bg-secondary/10 rounded-lg">
+              <MessageCircle className="mx-auto mb-1 text-secondary" size={24} />
+              <p className="text-lg font-bold">3</p>
+              <p className="text-xs text-muted-foreground">Messages</p>
             </div>
-            <div className="text-center p-4 bg-accent/20 rounded-xl">
-              <Calendar className="mx-auto mb-2 text-accent" size={32} />
-              <p className="text-2xl font-bold">2</p>
-              <p className="elderly-text text-muted-foreground">Upcoming Events</p>
+            <div className="text-center p-3 bg-accent/10 rounded-lg">
+              <Calendar className="mx-auto mb-1 text-accent" size={24} />
+              <p className="text-lg font-bold">2</p>
+              <p className="text-xs text-muted-foreground">Events</p>
             </div>
           </div>
         </div>
 
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          {features.map(({ title, description, icon: Icon, path, color }) => (
-            <Link
-              key={title}
-              to={path}
-              className={`elderly-card ${color} block transform hover:scale-105 transition-all duration-300`}
-            >
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-white/30 rounded-xl">
-                  <Icon size={40} className="text-foreground" />
+        {/* Feature Grid - Mobile Optimized */}
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold px-1">Main Features</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {features.map(({ title, description, icon: Icon, path, color }) => (
+              <Link
+                key={title}
+                to={path}
+                className={`${color} p-4 rounded-xl shadow-sm active:scale-95 transition-all duration-200 block`}
+              >
+                <div className="flex flex-col items-center text-center space-y-2">
+                  <div className="p-2 bg-white/30 rounded-lg">
+                    <Icon size={28} className="text-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold leading-tight">{title}</h3>
+                    <p className="text-xs opacity-90 mt-1">{description}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-2">{title}</h3>
-                  <p className="elderly-text opacity-90">{description}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* Emergency Contact */}
-        <div className="elderly-card bg-destructive/10 border-2 border-destructive/20">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-2xl font-bold text-destructive mb-2">Emergency Contact</h3>
-              <p className="elderly-text text-muted-foreground">
-                Need immediate help? Call your emergency contact or 911.
-              </p>
-            </div>
-            <button className="elderly-button bg-destructive text-destructive-foreground hover:bg-destructive/90">
-              Call Now
+        {/* Emergency Contact - Mobile Optimized */}
+        <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4">
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-destructive mb-2">Emergency</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Need immediate help? Tap to call emergency services.
+            </p>
+            <button className="w-full bg-destructive text-destructive-foreground py-3 px-6 rounded-lg font-semibold text-lg active:scale-95 transition-transform">
+              Call 911
             </button>
           </div>
         </div>
